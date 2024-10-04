@@ -63,11 +63,11 @@ const caseTypes = [
 //   {label: 'Archive', value: 'archive' }
 // ]
 
-const statusTypes = ["Pre-hearing",
-  "Hearing",
-  "Proposed Decision",
-  "Final Decision",
-  "Archive"];
+const statusTypes = [{ label: "Pre-hearing", value: "Pre-hearing" },
+  { label: "Hearing", value: "Hearing" },
+  { label: "Proposed Decision", value: "Proposed Decision" },
+  { label: "Final Decision", value: "Final Decision" },
+  { label: "Archive", value: "Archive" },]
   
 const caseSubType = [
   {label: "Air", value: "AIR"},

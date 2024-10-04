@@ -17,6 +17,7 @@ import {
   } from "@mui/material";
   import { useParams  } from 'next/navigation'
 import useFetchCaseData from '../hooks/useFetchCases';
+import { Suspense } from 'react'
 
   function PageToolbar() {
     return (

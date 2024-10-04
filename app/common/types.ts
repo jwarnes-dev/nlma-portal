@@ -2,7 +2,7 @@ export interface CaseRow {
   title: string;
   case: string;
   type: string;
-  subType?: string;
+  subType: string;
   dateFiled: string;
   status: string;
   statusDate: string;
