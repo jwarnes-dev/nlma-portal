@@ -48,8 +48,8 @@ const columns: Column[] = [
 //   { label: 'Trial', value: 'trial' }
 // ]
 const caseTypes = [
-  { label: 'Perimits', value: 'permits' },
-  { label: 'Orders', value: 'orders' },
+  { label: 'Perimits', value: 'permit' },
+  { label: 'Orders', value: 'order' },
   { label: 'License', value: 'license' },
 ]
 
@@ -171,11 +171,11 @@ function CaseTable() {
       || row.status.toLowerCase().includes(search)
       || row.parties.appellant.toLowerCase().includes(search)
       || row.parties.respondant.toLowerCase().includes(search))
-      && (row.title.toLowerCase().includes(searchForm.caseTitle))
-      && (row.case.toLowerCase().includes(searchForm.caseNumber))
-      && (row.status.toLowerCase().includes(searchForm.caseStatus))
-      && (row.type.toLowerCase().includes(searchForm.caseType))
-      && (row.parties.appellant.toLowerCase().includes(searchForm.caseParty) || row.parties.respondant.toLowerCase().includes(searchForm.caseParty))
+      && (row.title.toLowerCase().includes(searchForm.caseTitle.toLowerCase()))
+      && (row.case.toLowerCase().includes(searchForm.caseNumber.toLowerCase()))
+      && (row.status.toLowerCase().includes(searchForm.caseStatus.toLowerCase()))
+      && (row.type.toLowerCase().includes(searchForm.caseType.toLowerCase()))
+      && (row.parties.appellant.toLowerCase().includes(searchForm.caseParty.toLowerCase()) || row.parties.respondant.toLowerCase().includes(searchForm.caseParty.toLowerCase()))
       && (row.dateFiled.includes(searchForm.dateFiled?.format('YYYY-MM-DD') || ''))
       && (row.statusDate.includes(searchForm.statusDate?.format('YYYY-MM-DD') || ''))
     )
