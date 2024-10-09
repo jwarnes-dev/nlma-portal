@@ -48,7 +48,7 @@ const columns: Column[] = [
 //   { label: 'Trial', value: 'trial' }
 // ]
 const caseTypes = [
-  { label: 'Perimits', value: 'permit' },
+  { label: 'Permits', value: 'permit' },
   { label: 'Orders', value: 'order' },
   { label: 'License', value: 'license' },
 ]
