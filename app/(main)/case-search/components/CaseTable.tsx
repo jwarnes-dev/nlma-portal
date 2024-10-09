@@ -286,14 +286,14 @@ function CaseTable() {
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell key={column.id}>
-                      <TableSortLabel
+                      <TableSortLabel disabled={column.id == 'parties' } 
                         active={orderBy === column.id}
                         direction={orderBy === column.id ? order : "asc"}
                         onClick={() => handleRequestSort(column.id)}
                       >
                         {column.label}
                       </TableSortLabel>
-                    </TableCell>
+                    </TableCell> 
                   ))}
                 </TableRow>
               </TableHead>
