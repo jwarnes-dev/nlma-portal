@@ -173,7 +173,7 @@ function CaseTable() {
       || row.parties.respondant.toLowerCase().includes(search))
       && (row.title.toLowerCase().includes(searchForm.caseTitle.toLowerCase()))
       && (row.case.toLowerCase().includes(searchForm.caseNumber.toLowerCase()))
-      && (row.status.toLowerCase().includes(searchForm.caseStatus.toLowerCase()))
+      && (searchForm.caseStatus === "" || row.status.toLowerCase() === searchForm.caseStatus.toLowerCase())
       && (row.type.toLowerCase().includes(searchForm.caseType.toLowerCase()))
       && (row.parties.appellant.toLowerCase().includes(searchForm.caseParty.toLowerCase()) || row.parties.respondant.toLowerCase().includes(searchForm.caseParty.toLowerCase()))
       && (row.dateFiled.includes(searchForm.dateFiled?.format('YYYY-MM-DD') || ''))
