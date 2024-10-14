@@ -6,8 +6,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-// const steps = ['Draft', 'Submitted', 'Open', 'In progress', 'Completed']
-const steps = ["Pre-Hearing", "Hearing", "Proposed Decision", "Final Decision", "Archive"]
+const steps = ['Draft', 'Submitted', 'Open', 'In progress', 'Completed']
+// const steps = ["Pre-Hearing", "Hearing", "Proposed Decision", "Final Decision", "Archive"]
 
 interface HorizontalLinearStepperProps {
   initialStep?: number;
