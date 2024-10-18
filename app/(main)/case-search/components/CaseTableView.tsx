@@ -4,6 +4,9 @@ import {
   TableSortLabel, TablePagination, Paper, Link
 } from "@mui/material";
 import NextLink from 'next/link';
+import dayjs, { Dayjs } from 'dayjs';
+
+const dateFormatString = 'MMM DD YYYY';
 
 const CaseTableView = ({ columns, sortedRows, orderBy, order, handleRequestSort, rowsPerPage, page, handleChangePage, handleChangeRowsPerPage }) => {
   return (
@@ -32,11 +35,9 @@ const CaseTableView = ({ columns, sortedRows, orderBy, order, handleRequestSort,
               <TableRow key={index}>
                 <TableCell>{row.title}</TableCell>
                 <TableCell><Link component={NextLink} href={`/case-search/${row.case}`}>{row.case}</Link></TableCell>
-                <TableCell>{row.type}</TableCell>
-                <TableCell>{row.subType}</TableCell>
-                <TableCell>{row.dateFiled}</TableCell>
+                <TableCell>{ dayjs(row.dateFiled).format(dateFormatString) }</TableCell>
                 <TableCell>{row.status}</TableCell>
-                <TableCell>{row.statusDate}</TableCell>
+                <TableCell>{ dayjs(row.statusDate).format(dateFormatString) }</TableCell>
                 <TableCell>{`${row.parties.appellant}`}</TableCell>
               </TableRow>
             ))}

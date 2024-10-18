@@ -20,7 +20,7 @@ const statusTypes = [{ label: "Pre-hearing", value: "Pre-hearing" },
   { label: "Archive", value: "Archive" },]
 
 
-const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchFormChange, handleDateChange }) => {
+const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchFormChange, handleDateChange, loading }) => {
   return (
       <Paper square sx={
           {
@@ -61,7 +61,7 @@ const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchF
                 name="caseNumber" onChange={handleSearchFormChange} value={searchForm.caseNumber}
                 size="small"
               /> 
-              <TextField select label="Case Type" size="small" margin="dense" name="caseType" onChange={handleSearchFormChange} value={searchForm.caseType}>
+              {/* <TextField select label="Case Type" size="small" margin="dense" name="caseType" onChange={handleSearchFormChange} value={searchForm.caseType}>
                 {caseTypes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -70,7 +70,7 @@ const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchF
                 <MenuItem key="none" value="">
                     <em>Clear</em>
                 </MenuItem>
-              </TextField>
+              </TextField> */}
               <TextField select label="Case Status" size="small" margin="dense" name="caseStatus" onChange={handleSearchFormChange} value={searchForm.caseStatus}>
                 {statusTypes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -89,7 +89,7 @@ const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchF
                   }
                 }}
               />
-              <DatePicker value={searchForm.statusDate} label="Final Decision" sx={{marginTop: '14px'}}
+              <DatePicker value={searchForm.statusDate} label="Last Updated" sx={{marginTop: '14px'}}
                 name="statusDate" onChange={(newDate) => handleDateChange("statusDate", newDate)}
                 slotProps={{
                   actionBar: {

@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  TableSortLabel, TablePagination, Paper, TextField,
-  InputAdornment, Box, Container, TableFooter, MenuItem,
-  Link
-} from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import dayjs, { Dayjs } from 'dayjs';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import SearchPanel from "./SearchPanel";
 import CaseTableView from "./CaseTableView";
@@ -15,6 +10,7 @@ import CaseTableView from "./CaseTableView";
 
 import { CaseRow } from "@common/types";
 import useFetchCaseData from "../hooks/useFetchCases";
+import { Container } from "@mui/material";
 
 
 interface Column {
@@ -25,8 +21,6 @@ interface Column {
 const columns: Column[] = [
   { id: "title", label: "Title" },
   { id: "case", label: "Case" },
-  { id: "type", label: "Type" },
-  { id: "subType", label: "Code" },
   { id: "dateFiled", label: "Date Filed" },
   { id: "status", label: "Status" },
   { id: "statusDate", label: "Final Decision" },
@@ -85,6 +79,9 @@ function CaseTable() {
   const [rowsPerPage, setRowsPerPage] = useState<number>(50);
   const { data, loading, error } = useFetchCaseData(); 
   const [searchText, setSearchText] = useState<string>("");
+  const [delay, setDelay] = useState<number>(2200);
+  const [simulateDelay, setSimulateDelay] = useState<boolean>(false);
+
   const [searchForm, setSearchForm] = useState<CaseTableSearchForm>( 
                                               {
                                                 quickSearch: "",
@@ -138,6 +135,11 @@ function CaseTable() {
     setSearchForm({...searchForm, [dateKey]: newDate})
   }
 
+  // setSimulateDelay(true);
+  // setTimeout(() => {
+  //   setSimulateDelay(false)
+  // }, delay)
+
   const filteredRows = data?.filter(row => {
     const search = searchText.toLowerCase();
     return (
@@ -171,20 +173,28 @@ function CaseTable() {
           handleSearchChange={handleSearchChange}
           handleSearchFormChange={handleSearchFormChange}
           handleDateChange={handleDateChange}
+          loading={loading}
         />
       </Grid>
       <Grid size={10}>
-        <CaseTableView
-          columns={columns}
-          sortedRows={sortedRows}
-          orderBy={orderBy}
-          order={order}
-          handleRequestSort={handleRequestSort}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        {simulateDelay || loading ? 
+          <Container sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+            <CircularProgress size="8rem" />
+          </Container>
+        : 
+          <CaseTableView
+              columns={columns}
+              sortedRows={sortedRows}
+              orderBy={orderBy}
+              order={order}
+              handleRequestSort={handleRequestSort}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              handleChangePage={handleChangePage}
+              handleChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+        }
+        
       </Grid>
     </Grid>
 
