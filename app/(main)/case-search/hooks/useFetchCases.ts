@@ -21,27 +21,28 @@ function useFetchCaseData(): UseFetchCaseDataReturn {
     const fetchData =  async () => {
       try {
         setLoading(true);
-        const response = await axios.get<APIResponse[]>(casesEndpoint);
-        console.log(response.data)
+        // const response = await axios.get<APIResponse[]>(casesEndpoint);
+        // console.log(response.data)
 
-        const mappedData:CaseRow[] = response.data.map(c => {
-          return ({
-            title: c.subjectMatter,
-            case: c.caseNumber,
-            status: c.workflowStatus,
-            parties: {
-              appellant: "",
-              respondant: ""
-            },
-            statusDate: c.updatedDate,
-            subType: "",
-            type: "",
-            dateFiled: c.createdDate
-          })
-        })
+        // const mappedData:CaseRow[] = response.data.map(c => {
+        //   return ({
+        //     title: c.subjectMatter,
+        //     case: c.caseNumber,
+        //     status: c.workflowStatus,
+        //     parties: {
+        //       appellant: "",
+        //       respondant: ""
+        //     },
+        //     statusDate: c.updatedDate,
+        //     subType: "",
+        //     type: "",
+        //     dateFiled: c.createdDate
+        //   })
+        // })
         const fresponse: CaseRow[] = mockCases
 
-        setData(mappedData);
+        // setData(mappedData);
+        setData(fresponse);
       } catch (err) {
         setError((err as Error).message);
       } finally {

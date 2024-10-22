@@ -42,3 +42,11 @@ export interface APIResponse {
   attorney: string;
   organization: string;
 }
+
+export interface Comment {
+  fname: string;
+  lname: string;
+  text: string;
+  date: string;
+  id: string;
+}

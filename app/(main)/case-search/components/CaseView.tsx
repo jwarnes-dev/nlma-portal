@@ -18,6 +18,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import useFetchCaseData from "../hooks/useFetchCases";
 import { useParams  } from 'next/navigation'
 import { Label } from "@mui/icons-material";
+import Comments from "./comments/Comments";
 
 export default function CaseView() {
     const { data, loading, error } = useFetchCaseData(); 
@@ -127,14 +128,16 @@ export default function CaseView() {
                             <TabList onChange={handleChange} aria-label="lab API tabs example">
                                 <Tab label="Documents" value="1" />
                                 <Tab label="Parties" value="2" />
-                                <Tab label="Hearings" value="3" />
+                                <Tab label="Comments" value="3" />
                             </TabList>
                             </Box>
                             <TabPanel value="1">
                                 <CaseViewDocumentsTable />
                             </TabPanel>
                             <TabPanel value="2">Detailed parties information tab</TabPanel>
-                            <TabPanel value="3">Detailed hearings information tab</TabPanel>
+                            <TabPanel value="3">
+                                <Comments />
+                            </TabPanel>
                         </TabContext>
                     </Box>
                 </Paper>
