@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 // import mockCases from "../mock/mock.cases.json"
 import mockCases from "../mock/mock.cases-Dep.json"
 import { CaseRow, APIResponse } from "@common/types"

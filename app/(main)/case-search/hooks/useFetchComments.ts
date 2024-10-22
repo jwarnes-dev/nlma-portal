@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import mockComments from "../mock/mock.comments.json"
 import { Comment } from "@common/types"
 
