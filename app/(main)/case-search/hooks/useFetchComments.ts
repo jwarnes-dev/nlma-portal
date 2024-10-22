@@ -12,7 +12,7 @@ interface UseFetchCommentsReturn {
   submitComment: (comment: Comment) => void;
 }
 
-const commentsEndpoint = 'http://localhost:3030/case/c12345/comments'
+// const commentsEndpoint = 'http://localhost:3030/case/c12345/comments'
 
 function useFetchComments()  {
   const [comments, setComments] = useState<Comment[] | null>(null);
@@ -39,7 +39,6 @@ function useFetchComments()  {
 
   const submitComment = (comment: Comment): void => {
     setComments((prevComments) => [...(prevComments ?? []), comment]);
-    console.log("new length", comments?.length)
 }
 
   return { comments, submitComment, setComments, loading, error };
