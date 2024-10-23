@@ -48,5 +48,7 @@ export interface Comment {
   lname: string;
   text: string;
   date: string;
+  email: string;
+  town: string;
   id: string;
 }

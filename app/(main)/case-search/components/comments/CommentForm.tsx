@@ -10,6 +10,8 @@ import useFetchComments from '../../hooks/useFetchComments';
 interface ICommentForm {
     fname: string;
     lname: string;
+    email: string;
+    town: string;
     comment: string;
     loading: boolean;
 }
@@ -24,7 +26,7 @@ type CommentFormProps = {
   };
   
 export default function CommentForm({submitComment}: CommentFormProps){
-    const [form, setForm] = useState<ICommentForm>({fname: "", lname: "", comment: "", loading: false});
+    const [form, setForm] = useState<ICommentForm>({fname: "", lname: "", comment: "", loading: false, town: "", email: ""});
 
     const [alert, setAlert] = useState<ICommentAlert>({severity: 'info', text: 'Comments are reviewed before display and may not appear immediately.'})
 
@@ -34,18 +36,20 @@ export default function CommentForm({submitComment}: CommentFormProps){
     }
 
     const isFormValid = ():boolean => {
-        return form.fname.length > 0 && form.lname.length > 0 && form.comment.length > 0
+        return form.fname.length > 0 && form.lname.length > 0 && form.comment.length > 0 && form.email.length > 0 && form.town.length > 0
     }
 
     const handleSubmitComment = () => {
         setForm({...form, loading: true})
 
         setTimeout(() => {
-            setForm({fname: "", lname: "", comment: "", loading: false})
+            setForm({fname: "", lname: "", comment: "", loading: false, town: "", email: ""})
             submitComment({
                 date: new Date().toString(),
                 fname: form.fname,
                 lname: form.lname,
+                email: form.email,
+                town: form.town,
                 text: form.comment,
                 id: `C${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`
             })
@@ -85,6 +89,26 @@ export default function CommentForm({submitComment}: CommentFormProps){
                         >
                             Submit
                         </LoadingButton>
+                    </Stack>
+                    <Stack direction="row" spacing={2} sx={{marginTop: '8px', width: '600px'}}>
+                        <TextField
+                            required
+                            name="email"
+                            label="Email" size='small'
+                            value={form.email}
+                            onChange={handleSearchFormChange}
+                            disabled={form.loading}
+                            fullWidth 
+                        />
+                        <TextField
+                            required
+                            name="town"
+                            label="Town" size='small'
+                            value={form.town}
+                            onChange={handleSearchFormChange}
+                            disabled={form.loading}
+                            fullWidth 
+                        />
                     </Stack>
                     <TextField name="comment" sx={{minWidth: '600px', margin: '8px 0'}} multiline label="Comment" placeholder='Add your comment for submission' 
                         value={form.comment}

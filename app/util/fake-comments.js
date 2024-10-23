@@ -8,6 +8,8 @@ function generateFakeComment() {
     fname: faker.person.firstName(),
     lname: faker.person.lastName(),
     text: faker.lorem.words({ min: 10, max: 50 }),
+    email: faker.internet.email(),
+    town: faker.location.city(),
     date: faker.date.between({ from: '2022-01-01', to: new Date().toISOString()}),
     id: faker.string.uuid()
   };
