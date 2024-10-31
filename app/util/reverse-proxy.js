@@ -4,8 +4,6 @@ const cors = require('cors');
 
 const app = express();
 const PORT = 3030;
-
-// Enable CORS
 app.use(cors());
 
 
@@ -44,7 +42,6 @@ app.get('/case/:matterId', async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
