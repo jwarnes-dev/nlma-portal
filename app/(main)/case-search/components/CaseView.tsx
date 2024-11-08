@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid2'
 import CaseStatusStepper from "./CaseStatusStepper"
 import CaseViewDocumentsTable from "./CaseViewDocumentsTable"
 import UpcomingEvents from "./UpcomingEvents"
+import EventsList from "./events/EventList"
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -55,7 +56,7 @@ export default function CaseView() {
 
     return (
         <Grid container spacing={2}>
-            <Grid container size={8}>
+            <Grid container size={6}>
                 <Paper sx={{padding: '16px', width: '100%'}} elevation={3} >
                 <Typography variant="h5" gutterBottom>Status</Typography>
                 {getStatusStep()}
@@ -117,8 +118,9 @@ export default function CaseView() {
                     </Box>
                 </Paper>
             </Grid>
-            <Grid size={4}>
-                 <UpcomingEvents />
+            <Grid size={6}>
+                 {/* <UpcomingEvents /> */}
+                 <EventsList events={[]} />
             </Grid>
             <Grid size={12}>
                 <Paper sx={{padding: '16px', width: '100%'}} elevation={3} >

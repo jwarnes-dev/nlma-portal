@@ -52,3 +52,12 @@ export interface Comment {
   town: string;
   id: string;
 }
+
+export interface Event {
+  id: string;
+  date: string;
+  time?: string;
+  title: string;
+  info: string;
+  location: string;
+}
