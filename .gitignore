@@ -130,3 +130,7 @@ dist
 .yarn/install-state.gz
 node_modules
 node_modules
+
+#iis
+ecosystem.config.js
+web.config
