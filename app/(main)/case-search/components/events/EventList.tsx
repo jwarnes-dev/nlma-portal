@@ -102,7 +102,7 @@ function EventDay({ day, date, active, events, open }: EventDayProps) {
                     
                 </Box>
                 <Stack spacing={0} sx={{height: "100%", justifyContent: "center", minHeight: "65px", paddingLeft:"16px", borderLeft: "1px solid #e0e0e0"}}>
-                    {events.map((event) => <EventItem event={event} showEvent={() => open(event)}/>)}
+                    {events.map((event) => <EventItem key={event.id} event={event} showEvent={() => open(event)}/>)}
                     {!events.length && <Typography sx={{color: "#565858"}}>No events for this day.</Typography>}
                 </Stack>
             </Stack>
@@ -159,36 +159,35 @@ export default function EventList({ events }: EventListProps) {
                 <Divider sx={{marginBottom: '12px', marginTop: '4px'}} />
                 <Stack spacing={1}>
                     {(() => {
-                        switch (date.format('MMMM')) {
-                            case 'September':
+                        switch (date.format('MMMM YYYY')) {
+                            case 'September 2024':
                                 return (
                                     <>
                                         <EventDay day="Mon" date="04" active={false} events={events1} open={openModal} />
                                     </>
                                 );
-                            case 'October':
+                            case 'October 2024':
                                 return (
                                     <>
                                         <EventDay day="Thu" date="12" active={false} events={events1} open={openModal} />
                                         <EventDay day="Fri" date="13" active={false} events={events2} open={openModal} />
                                     </>
                                 );
-                            case 'November':
+                            case 'November 2024':
                                 return (
                                     <>
                                         <EventDay day="Wed" date="06" active={false} events={events1} open={openModal} />
                                         <EventDay day="Thu" date="07" active={false} events={events2} open={openModal} />
-                                        <EventDay day="Fri" date="08" active={true} events={[]} open={openModal} />
                                         <EventDay day="Mon" date="11" active={false} events={events3} open={openModal} />
+                                        <EventDay day="Tue" date="12" active={date.format('D') == '12'} events={events3} open={openModal} />
+                                        <EventDay day="Wed" date="13" active={date.format('D') == '13'} events={events3} open={openModal} />
                                     </>
                                 );
                             default:
                                 return (
-                                    <>
-                                        <Paper square={false} sx={{padding: '16px', width: '100%'}} elevation={1} >
-                                            <Typography sx={{color: "#565858"}}>No events scheduled for this month.</Typography>
-                                        </Paper>
-                                    </>
+                                    <Paper square={false} sx={{padding: '16px', width: '100%'}} elevation={1} >
+                                        <Typography sx={{color: "#565858"}}>No events scheduled for this month.</Typography>
+                                    </Paper>
                                 );
                         }
                     })()}
