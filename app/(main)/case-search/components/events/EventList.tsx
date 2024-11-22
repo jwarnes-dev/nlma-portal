@@ -73,7 +73,17 @@ const events2: Event[] = [
 const events3: Event[] = [
     {
         title: "Informational Public",
-        time: "10:00am - 1:30pm",
+        time: "11:00am - 2:30pm",
+        location: "Zoom",
+        info: "This is a Public Comment Hearing",
+        id: '44',
+        date: new Date().toDateString()
+    },
+]
+const events4: Event[] = [
+    {
+        title: "Pre-hearing Conference",
+        time: "12:45pm - 2:00pm",
         location: "Zoom",
         info: "This is a Public Comment Hearing",
         id: '44',
@@ -169,18 +179,17 @@ export default function EventList({ events }: EventListProps) {
                             case 'October 2024':
                                 return (
                                     <>
-                                        <EventDay day="Thu" date="12" active={false} events={events1} open={openModal} />
+                                        <EventDay day="Thu" date="12" active={false} events={events4} open={openModal} />
                                         <EventDay day="Fri" date="13" active={false} events={events2} open={openModal} />
                                     </>
                                 );
                             case 'November 2024':
                                 return (
                                     <>
-                                        <EventDay day="Wed" date="06" active={false} events={events1} open={openModal} />
-                                        <EventDay day="Thu" date="07" active={false} events={events2} open={openModal} />
-                                        <EventDay day="Mon" date="11" active={false} events={events3} open={openModal} />
+                                        <EventDay day="Thu" date="07" active={true} events={events1} open={openModal} />
+                                        <EventDay day="Mon" date="11" active={false} events={events2} open={openModal} />
                                         <EventDay day="Tue" date="12" active={date.format('D') == '12'} events={events3} open={openModal} />
-                                        <EventDay day="Wed" date="13" active={date.format('D') == '13'} events={events3} open={openModal} />
+                                        <EventDay day="Wed" date="13" active={false} events={events3} open={openModal} />
                                     </>
                                 );
                             default:
