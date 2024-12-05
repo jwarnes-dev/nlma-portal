@@ -1,3 +1,4 @@
+"use client";
 
 import * as React from 'react';
 import { AppProvider } from '@toolpad/core/nextjs';
@@ -10,11 +11,26 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
+
+import { DialogsProvider, useDialogs, DialogProps } from '@toolpad/core/useDialogs';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+
+import { AuthProvider, useAuth } from '@auth/FirebaseContext';
+
 import '@common/styles.css'
+
+import {
+  type Session,
+} from '@toolpad/core/AppProvider';
+
 
 import type { Navigation } from '@toolpad/core';
 
 import theme from '../theme';
+import SignInModal from './auth/SignInModal';
+import { Segment } from '@mui/icons-material';
 
 const NAVIGATION: Navigation = [
   {
@@ -67,28 +83,98 @@ const NAVIGATION: Navigation = [
   },
 ];
 
+const ADMIN: Navigation = [
+  {
+    kind: 'divider',
+  },
+  {
+    kind: 'header',
+    title: 'Administration',
+  },
+  {
+    segment: 'comments',
+    title: 'Pending Comments',
+    icon: <MarkChatReadIcon />,
+  }
+]
+
 const BRANDING = {
   title: 'Legal Matters Accelerator Public Portal',
   logo: ''
 };
 
 
+function MyCustomDialog({ open, onClose }: DialogProps) {
+  return (
+    <Dialog fullWidth open={open} onClose={() => onClose()}>
+      <DialogTitle>Custom dialog</DialogTitle>
+      <DialogContent>I am a custom dialog</DialogContent>
+      <DialogActions>
+        <Button onClick={() => onClose()}>Close me</Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+
+
 export default function RootLayout(props: { children: React.ReactNode }) {
+
+
+  const [session, setSession] = React.useState<Session | null>(null);
+  
+  const [open, setOpen] = React.useState(false);
+  const [isAuthed, setIsAuthed] = React.useState(false);
+
+  const [nav, setNav] = React.useState(NAVIGATION);
+
+  let AdminNav = NAVIGATION;
+
+  const authentication = React.useMemo(() => {
+    return {
+      signIn: () => {
+        setOpen(true);
+        // setSession({
+        //   user: {
+        //     name: 'Justin Warnes',
+        //     email: 'jwarnes@gmail.com',
+        //   },
+        // });
+        
+      },
+      signOut: () => {
+        setSession(null);
+        setIsAuthed(false);
+        setOpen(false);
+      },
+    };
+  }, []);
+
+  function onAuth() {
+    setIsAuthed(true);
+    setOpen(false);
+    setNav(NAVIGATION.concat(ADMIN));
+  }
+
 
   return (
     <html lang="en" data-toolpad-color-scheme="light" suppressHydrationWarning>
       <body>
+      <AuthProvider authed={isAuthed} setAuth={setIsAuthed} onAuth={onAuth}>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <AppProvider
-              navigation={NAVIGATION}
+              navigation={nav}
               branding={BRANDING}
-              
+              session={session}
+              authentication={authentication}
               theme={theme}
             >
-              {props.children}
+               {props.children} 
+              
             </AppProvider>
+            <SignInModal setSession={setSession} open={open} handleClose={() => setOpen(false)} />
           </AppRouterCacheProvider>
-        
+        </AuthProvider>
       </body>
     </html>
   );
