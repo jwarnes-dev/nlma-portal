@@ -51,6 +51,7 @@ export interface Comment {
   email: string;
   town: string;
   id: string;
+  status?: string;
 }
 
 export interface Event {

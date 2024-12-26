@@ -175,7 +175,7 @@ const SignInModal: React.FC<SignInModalProps> = ({ open, handleClose, setSession
               size='small'
               disabled={isLoading}
             />
-            { isError ? <Alert sx={{marginTop: '8px'}} severity="error">Oops, those credentials didn't work! </Alert> : null}
+            { isError ? <Alert sx={{marginTop: '8px'}} severity="error">Oops, those credentials didn&apos;t work! </Alert> : null}
           </Box>
         </DialogContent>
         <DialogActions>

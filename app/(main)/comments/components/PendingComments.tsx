@@ -13,13 +13,12 @@ import dayjs from 'dayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CommentsListApprove from '../../case-search/components/comments/CommentsListApprove';
 
 
 export default function PendingComments({ }) {
 
     return (
-        <Stack direction="row" spacing={2} sx={{alignItems: "center", color: "#565858"}}>
-            sdg
-        </Stack>
+        <CommentsListApprove actions={true} commentso={[]} />
     )
 }
