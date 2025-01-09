@@ -7,7 +7,7 @@ export default function IntakePage() {
     
     <PageContainer className='page-container-max'>
       <Typography>
-        This is a test page
+        This is my new test page information
       </Typography>
     </PageContainer>
   );
