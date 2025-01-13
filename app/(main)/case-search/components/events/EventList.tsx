@@ -17,6 +17,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 interface EventListProps {
     events: Event[]
+    master?: boolean;
 }
 
 interface EventItemProps {
@@ -131,7 +132,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }));
 
 
-export default function EventList({ events }: EventListProps) {
+export default function EventList({ events, master }: EventListProps) {
     const [open, setOpen] = React.useState(false);
     const [event, setEvent] = React.useState({} as Event);
     const [date, setDate] = React.useState(dayjs());
@@ -169,6 +170,7 @@ export default function EventList({ events }: EventListProps) {
                 <Divider sx={{marginBottom: '12px', marginTop: '4px'}} />
                 <Stack spacing={1}>
                     {(() => {
+                        if(master) return;
                         switch (date.format('MMMM YYYY')) {
                             case 'September 2024':
                                 return (
