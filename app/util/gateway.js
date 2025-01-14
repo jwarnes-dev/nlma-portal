@@ -8,7 +8,7 @@ app.use(cors());
 
 
 const BASE_URL = 'https://lmadev.cerebra-consulting.com/entellitrak/api/endpoints/case';
-const COOKIE = 'JSESSIONID=DC65879ECF145E40E0C1EB4C5E3A7FA4';
+const COOKIE = 'JSESSIONID=6F6AD3880EB96275B9E5840BB88061BC';
 
 // GET /cases/ - Fetch all cases
 app.get('/cases', async (req, res) => {

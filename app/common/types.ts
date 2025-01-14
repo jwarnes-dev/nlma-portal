@@ -61,4 +61,5 @@ export interface Event {
   title: string;
   info: string;
   location: string;
+  caseNumber?: string;
 }
