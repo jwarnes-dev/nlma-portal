@@ -63,7 +63,7 @@ export default function TestPage() {
               info: e.instructions,
               date: e.dueDate,
               location: 'Zoom',
-              time: e.beginTime || '11:11 AM',
+              time: e.beginTime || 'All Day',
               // date: e.dueDate,
               caseNumber: e.caseNumber,
               // status: e.status,
