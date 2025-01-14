@@ -18,6 +18,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 interface EventListProps {
     events: Event[]
     master?: boolean;
+    eventDays?: any[];
 }
 
 interface EventItemProps {
@@ -132,7 +133,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   }));
 
 
-export default function EventList({ events, master }: EventListProps) {
+export default function EventList({ events, master, eventDays }: EventListProps) {
     const [open, setOpen] = React.useState(false);
     const [event, setEvent] = React.useState({} as Event);
     const [date, setDate] = React.useState(dayjs());
@@ -170,36 +171,39 @@ export default function EventList({ events, master }: EventListProps) {
                 <Divider sx={{marginBottom: '12px', marginTop: '4px'}} />
                 <Stack spacing={1}>
                     {(() => {
-                        if(master) return;
+                        if(!master) {
                         switch (date.format('MMMM YYYY')) {
-                            case 'September 2024':
-                                return (
-                                    <>
-                                        <EventDay day="Mon" date="04" active={false} events={events1} open={openModal} />
-                                    </>
-                                );
-                            case 'October 2024':
-                                return (
-                                    <>
-                                        <EventDay day="Thu" date="12" active={false} events={events4} open={openModal} />
-                                        <EventDay day="Fri" date="13" active={false} events={events2} open={openModal} />
-                                    </>
-                                );
-                            case 'November 2024':
-                                return (
-                                    <>
-                                        <EventDay day="Thu" date="07" active={true} events={events1} open={openModal} />
-                                        <EventDay day="Mon" date="11" active={false} events={events2} open={openModal} />
-                                        <EventDay day="Tue" date="12" active={date.format('D') == '12'} events={events3} open={openModal} />
-                                        <EventDay day="Wed" date="13" active={false} events={events3} open={openModal} />
-                                    </>
-                                );
-                            default:
-                                return (
-                                    <Paper square={false} sx={{padding: '16px', width: '100%'}} elevation={1} >
-                                        <Typography sx={{color: "#565858"}}>No events scheduled for this month.</Typography>
-                                    </Paper>
-                                );
+                                case 'September 2024':
+                                    return (
+                                        <>
+                                            <EventDay day="Mon" date="04" active={false} events={events1} open={openModal} />
+                                        </>
+                                    );
+                                case 'October 2024':
+                                    return (
+                                        <>
+                                            <EventDay day="Thu" date="12" active={false} events={events4} open={openModal} />
+                                            <EventDay day="Fri" date="13" active={false} events={events2} open={openModal} />
+                                        </>
+                                    );
+                                case 'November 2024':
+                                    return (
+                                        <>
+                                            <EventDay day="Thu" date="07" active={true} events={events1} open={openModal} />
+                                            <EventDay day="Mon" date="11" active={false} events={events2} open={openModal} />
+                                            <EventDay day="Tue" date="12" active={date.format('D') == '12'} events={events3} open={openModal} />
+                                            <EventDay day="Wed" date="13" active={false} events={events3} open={openModal} />
+                                        </>
+                                    );
+                                default:
+                                    return (
+                                        <Paper square={false} sx={{padding: '16px', width: '100%'}} elevation={1} >
+                                            <Typography sx={{color: "#565858"}}>No events scheduled for this month.</Typography>
+                                        </Paper>
+                                    );
+                            }
+                        }  else {
+                            return eventDays?.filter(day => day.month === date.format('MMMM YYYY')).map((day: any) => <EventDay key={day.date} day={day.dayName} date={day.dateNumber} active={day.date == new Date().toDateString()} events={day.events} open={openModal} />) || null
                         }
                     })()}
                 </Stack>
