@@ -62,7 +62,6 @@ export default function CommentsListApprove({ commentso, actions }: CommentsList
 
   useEffect(() => {
     const q = query(collection(db, 'comments', 'C494248', 'comments'), orderBy("last", "asc"));
-    console.log("querying")
 
     // const unsubscribe = onSnapshot(q, (snapshot) => {
     //   snapshot.docChanges().forEach((change) => {
