@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Box, Paper, Stack, Typography, TextField, Button, Divider, Alert, CircularProgress } from '@mui/material';
+import { Box, Paper, Stack, Typography, TextField, Button, Divider, Alert, CircularProgress, IconButton } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { useState } from 'react';
 import useFetchComments from '../../hooks/useFetchComments';
+import { FileUploadOutlined } from '@mui/icons-material';
+import axios from 'axios';
 
 interface ICommentForm {
     fname: string;
@@ -29,6 +31,8 @@ export default function CommentForm({submitComment}: CommentFormProps){
     const [form, setForm] = useState<ICommentForm>({fname: "", lname: "", comment: "", loading: false, town: "", email: ""});
 
     const [alert, setAlert] = useState<ICommentAlert>({severity: 'info', text: 'Comments are reviewed before display and may not appear immediately.'})
+
+    const [file, setFile] = useState<string>('');
 
 
     const handleSearchFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +61,33 @@ export default function CommentForm({submitComment}: CommentFormProps){
             setAlert({severity: 'success', text: 'Your comment has been submitted and is awaiting review!'})
         }, 1200)
     }
+
+    
+    const FILE_UPLOAD_URL = '/upload';
+
+    const handleUpload = (event) => {
+        event.preventDefault();
+        console.log("File submitted", event.target.files[0])
+
+        const file = event.target.files[0];
+        const formData = new FormData();
+
+        setFile(file.name);
+        formData.append('file', file);
+      
+        axios.post(FILE_UPLOAD_URL, formData)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    }
+
+    const submitUpload = () => {
+        
+    }
+
 
     return (
         <Paper elevation={0}>
@@ -116,6 +147,28 @@ export default function CommentForm({submitComment}: CommentFormProps){
                         disabled={form.loading}
                         variant='filled'
                     />
+                    <TextField
+                        variant="standard"          
+                        type="text"
+                        placeholder='Attach a file to this comment submission'
+                        value={file}
+                        sx={{minWidth: '600px'}}
+                        InputProps={{
+                            endAdornment: (
+                            <IconButton component="label">
+                                <FileUploadOutlined />
+                                <input
+                                    style={{display:"none"}}
+                                    type="file"
+                                    hidden
+                                    onChange={handleUpload}
+                                    name="[attachment]"
+                                    accept=".pdf,.docx,.doc,.txt,.jpg,.jpeg,.png"
+                                />
+                            </IconButton>
+                            ),
+                        }}
+                        />
                 </Grid>
                 <Grid size={4} alignContent={'center'}>
                     {form.loading ? 

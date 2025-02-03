@@ -10,10 +10,35 @@ app.use(cors());
 const BASE_URL = 'https://lmadev.cerebra-consulting.com/entellitrak/api/endpoints/case';
 const COOKIE = 'JSESSIONID=6F6AD3880EB96275B9E5840BB88061BC';
 
+const testComment = {
+  "id": "test55555",
+  "text": "test text from gateway",
+  "date": "1-30-2025",
+  "email": "agc@def.com",
+  "town": "abc",
+  "caseId": "abc",
+  "fName": "first",
+  "lname": "last"
+  };
+
+  // POST /comment - Create a new comment
+app.post('/comment', async (req, res) => { 
+  try {
+    const response = await axios.get(`${BASE_URL}/getAllCases`, {
+      headers: {
+        Cookie: COOKIE,
+      },
+    });
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching cases', error: error.message });
+  }
+})
+
 // GET /cases/ - Fetch all cases
 app.get('/cases', async (req, res) => {
   try {
-    const response = await axios.get(`${BASE_URL}/getAllCases`, {
+    const response = await axios.post(`https://lmadev.cerebra-consulting.com/entellitrak/api/endpoints/public/portal/addComment`, testComment, {
       headers: {
         Cookie: COOKIE,
       },
@@ -42,6 +67,20 @@ app.get('/case/:matterId', async (req, res) => {
   }
 });
 
+// GET /events- Fetch all events across all cases
+app.get('/events', async (req, res) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/getAllTasks`, {
+      headers: {
+        Cookie: COOKIE,
+      },
+    });
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching events', error: error.message });
+  }
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-});
+})
