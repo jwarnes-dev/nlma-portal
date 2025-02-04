@@ -30,7 +30,7 @@ function EventItem({ event, showEvent }: EventItemProps) {
     return (
         <Stack direction="row" spacing={2} sx={{alignItems: "center", color: "#565858"}}>
             <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858", width: "165px"}}>
-                <AccessTimeIcon fontSize='small' /><Typography>{event.time}</Typography>
+                <AccessTimeIcon fontSize='small' /><Typography>{!event.endtime ? event.time : `${event.time} - ${event.endtime}` }</Typography>
             </Stack>
             <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858"}}>
                 <LocationOnIcon fontSize='small' /><Typography>{event.location}</Typography>
