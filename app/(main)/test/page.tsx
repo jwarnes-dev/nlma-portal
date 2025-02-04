@@ -69,7 +69,7 @@ export default function TestPage() {
               // status: e.status,
               // allDay: e.allDay,
               // beginTime: e.beginTime,
-              // endTime: e.endTime
+              endtime: e.endTime
             }; 
             return event;
           })
