@@ -38,7 +38,7 @@ export default function TestPage() {
         console.log(days)
         const today = dayjs().format('MM-DD-YYYY');
         if (!days.has(today)) {
-          days.add(today);
+          // days.add(today);
         }
         const eventDays: { date: string; dayName: string; dateNumber: string; month: string; events: any[] }[] = [];
 
