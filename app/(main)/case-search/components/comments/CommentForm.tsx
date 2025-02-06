@@ -58,6 +58,7 @@ export default function CommentForm({submitComment}: CommentFormProps){
                 id: `C${Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000}`
             })
 
+            setFile('')
             setAlert({severity: 'success', text: 'Your comment has been submitted and is awaiting review!'})
         }, 1200)
     }

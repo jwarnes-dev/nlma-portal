@@ -28,8 +28,8 @@ interface EventItemProps {
 function EventItem({ event, showEvent }: EventItemProps) {
 
     return (
-        <Stack direction="row" spacing={2} sx={{alignItems: "center", color: "#565858"}}>
-            <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858", width: "165px"}}>
+        <Stack direction="row" spacing={2} sx={{alignItems: "center", color: "#565858", width: '100%'}}>
+            <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858", width: "200px"}}>
                 <AccessTimeIcon fontSize='small' /><Typography>{!event.endtime ? event.time : `${event.time} - ${event.endtime}` }</Typography>
             </Stack>
             <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858"}}>
@@ -105,7 +105,7 @@ function EventDay({ day, date, active, events, open }: EventDayProps) {
 
     return (
         <Paper square={false} sx={{padding: '16px', width: '100%'}} elevation={1} >
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2} sx={{width: '100%'}}>
                 <Box>
                     <Stack sx={{alignItems: "center", width: "66px", color: active ? "#e34510" : "#565858"}}>
                         <Typography >{day}</Typography>
