@@ -39,10 +39,6 @@ import { Segment } from '@mui/icons-material';
 
 const NAVIGATION: Navigation = [
   {
-   kind: 'header', 
-   title: 'ENV: Prod'
-  },
-  {
     kind: 'header',
     title: 'Main Menu',
   },
