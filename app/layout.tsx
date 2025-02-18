@@ -16,6 +16,8 @@ import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
 
 import { DialogsProvider, useDialogs, DialogProps } from '@toolpad/core/useDialogs';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
+import Badge from '@mui/material/Badge';
+import Chip from '@mui/material/Chip';
 
 import { AuthProvider, useAuth } from '@auth/FirebaseContext';
 
@@ -33,10 +35,6 @@ import SignInModal from './auth/SignInModal';
 import { Segment } from '@mui/icons-material';
 
 const NAVIGATION: Navigation = [
-  {
-   kind: 'header', 
-   title: 'ENV: Prod'
-  },
   {
     kind: 'header',
     title: 'Main Menu',
@@ -103,7 +101,7 @@ const ADMIN: Navigation = [
 ]
 
 const BRANDING = {
-  title: 'Legal Matters Accelerator Public Portal',
+  title:<>Legal Matters Accelerator <Chip label="Dev" /></>,
   logo: ''
 };
 
