@@ -161,6 +161,13 @@ export default function CommentsListApprove({ commentso, actions }: CommentsList
                     <Typography sx={{marginTop: '12px'}} color="#67727e">
                         {c.text}
                     </Typography>
+                    { c.id == 'WX13A6w4KNNRDX84x9zg' ? 
+                    <Stack>
+                      <Divider />
+                      <Link target='_NEW' href="https://firebasestorage.googleapis.com/v0/b/cerebra-3f49d.firebasestorage.app/o/test.pdf-2821.943114155428?alt=media&token=ded4696b-0193-46aa-9232-4ae87ff78494" >test.pdf</Link>
+                      <Link target='_NEW' href="https://firebasestorage.googleapis.com/v0/b/cerebra-3f49d.firebasestorage.app/o/bird.png-2734.2872902426097?alt=media&token=a17a70ab-5d7d-4cff-a6e5-c2a86e5887e0" >bird.png</Link>
+                    </Stack>
+                    : '' }
                 </Paper>
             ))}
         </Box>
