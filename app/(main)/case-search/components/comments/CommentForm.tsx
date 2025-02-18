@@ -9,6 +9,8 @@ import useFetchComments from '../../hooks/useFetchComments';
 import { FileUploadOutlined } from '@mui/icons-material';
 import axios from 'axios';
 
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+
 interface ICommentForm {
     fname: string;
     lname: string;
@@ -66,6 +68,8 @@ export default function CommentForm({submitComment}: CommentFormProps){
     
     const FILE_UPLOAD_URL = '/upload';
 
+    const storage = getStorage();
+
     const handleUpload = (event) => {
         event.preventDefault();
         console.log("File submitted", event.target.files[0])
@@ -76,13 +80,31 @@ export default function CommentForm({submitComment}: CommentFormProps){
         setFile(file.name);
         formData.append('file', file);
       
-        axios.post(FILE_UPLOAD_URL, formData)
-          .then(response => {
-            console.log(response);
-          })
-          .catch(error => {
+        // axios.post(FILE_UPLOAD_URL, formData)
+        //   .then(response => {
+        //     console.log(response);
+        //   })
+        //   .catch(error => {
+        //     console.error(error);
+        //   });
+        
+        const storageRef = ref(storage, `${file.name}-${Math.random()*2000+1000}`);
+
+        const metadata = {
+            customMetadata: {
+              'caseId': `C494248`,
+              'commentId': `${Math.random()*2000+1000}`
+            }
+          };
+
+        uploadBytes(storageRef, file, metadata).then((snapshot) => {
+            console.log('Uploaded File!', snapshot);
+        }).catch(error => {
             console.error(error);
-          });
+        }).finally(() => {
+            setForm({fname: "", lname: "", comment: "", loading: false, town: "", email: ""})
+            setFile('')
+        })
     }
 
     const submitUpload = () => {
