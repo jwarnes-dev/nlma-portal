@@ -119,7 +119,8 @@ export default function CaseView() {
                 </Paper>
             </Grid>
             <Grid size={6}>
-                 <EventsList events={[]} />
+                 {/* <EventsList events={[]} /> */}
+                 <UpcomingEvents />
             </Grid>
             <Grid size={12}>
                 <Paper sx={{padding: '16px', width: '100%'}} elevation={3} >

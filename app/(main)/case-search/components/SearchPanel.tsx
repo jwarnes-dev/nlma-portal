@@ -4,7 +4,7 @@ import { TextField, InputAdornment, MenuItem, Paper } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import Grid from '@mui/material/Grid2';
 import Calendar from '@mui/icons-material/Event';
-import { DatePicker, DateRangePicker } from '@mui/x-date-pickers-pro';
+import { DatePicker, DateRangePicker, SingleInputDateRangeField } from '@mui/x-date-pickers-pro';
 import dayjs, { Dayjs } from 'dayjs';
 
 const caseTypes = [
@@ -81,7 +81,7 @@ const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchF
                     <em>Clear</em>
                   </MenuItem>
               </TextField>
-              <DatePicker value={searchForm.dateFiled} label="Filed Date" sx={{marginTop: '14px'}}
+              {/* <DatePicker value={searchForm.dateFiled} label="Filed Date" sx={{marginTop: '14px'}}
                 name="dateFiled" onChange={(newDate) => handleDateChange("dateFiled", newDate)}
                 slotProps={{
                   actionBar: {
@@ -89,21 +89,23 @@ const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchF
                   }
                 }}
               />
-              <DatePicker value={searchForm.statusDate} label="Last Updated" sx={{marginTop: '14px'}}
-                name="statusDate" onChange={(newDate) => handleDateChange("statusDate", newDate)}
-                slotProps={{
-                  actionBar: {
-                    actions: ['clear'],
-                  }
-                }}
-              />
-              {/* <DateRangePicker
+               */}
+              <DateRangePicker
+                sx={{marginTop: '14px'}}
+                slots={{ field: SingleInputDateRangeField }}
+                slotProps={{ 
+                  textField: { InputProps: { endAdornment: <Calendar /> },
+                } }}
+                label="Filed Date"
+                calendars={1}
+              /> 
+               <DateRangePicker
                 sx={{marginTop: '14px'}}
                 slots={{ field: SingleInputDateRangeField }}
                 slotProps={{ textField: { InputProps: { endAdornment: <Calendar /> } } }}
-                label="Status Date"
+                label="Last Updated"
                 calendars={1}
-              /> */}
+              /> 
               <TextField sx={{marginBottom: '8px'}}
                 label="Case Party"
                 variant="outlined"
