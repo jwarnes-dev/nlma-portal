@@ -20,6 +20,7 @@ const statusTypes = [{ label: "Pre-hearing", value: "Pre-hearing" },
   { label: "Archive", value: "Archive" },]
 
 
+
 const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchFormChange, handleDateChange, loading }) => {
   return (
       <Paper square sx={
@@ -94,17 +95,34 @@ const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchF
                 sx={{marginTop: '14px'}}
                 slots={{ field: SingleInputDateRangeField }}
                 slotProps={{ 
-                  textField: { InputProps: { endAdornment: <Calendar /> },
-                } }}
+                  textField: { InputProps: { endAdornment: <Calendar />, } },
+                  field: {
+                    clearable: true,
+                  },
+                  actionBar: {
+                    actions: ["clear"],
+                  },
+                } }
                 label="Filed Date"
                 calendars={1}
+                onChange={(newDate) => {
+
+
+                  handleDateChange(['dateFiled', 'dateFiledEnd'], newDate)
+                }}
               /> 
-               <DateRangePicker
+              <DateRangePicker
                 sx={{marginTop: '14px'}}
                 slots={{ field: SingleInputDateRangeField }}
-                slotProps={{ textField: { InputProps: { endAdornment: <Calendar /> } } }}
+                slotProps={{ 
+                  textField: { InputProps: { endAdornment: <Calendar /> },
+                } }}
                 label="Last Updated"
                 calendars={1}
+                onChange={(newDate) => {
+                  if(newDate[1] === null) return;
+                  handleDateChange(['statusDate', 'statusDateEnd'], newDate)
+                }}
               /> 
               <TextField sx={{marginBottom: '8px'}}
                 label="Case Party"

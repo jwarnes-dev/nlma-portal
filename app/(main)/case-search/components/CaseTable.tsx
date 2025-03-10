@@ -89,7 +89,9 @@ function CaseTable() {
                                                 caseType: "",
                                                 caseStatus: "",
                                                 dateFiled: null,
+                                                dateFiledEnd: null,
                                                 statusDate: null,
+                                                statusDateEnd: null,
                                                 caseParty: "",
                                                 caseTitle: ""
                                               });
@@ -100,7 +102,9 @@ function CaseTable() {
     caseType: string
     caseStatus: string
     dateFiled: Dayjs | null
+    dateFiledEnd: Dayjs | null
     statusDate: Dayjs | null
+    statusDateEnd: Dayjs | null
     caseParty: string
     caseTitle: string
   }
@@ -131,9 +135,12 @@ function CaseTable() {
     setSearchForm({...searchForm, [event.target.name]: event.target.value})
   };
 
-  const handleDateChange = (dateKey: string, newDate: dayjs.Dayjs | null) => {
-    setSearchForm({...searchForm, [dateKey]: newDate})
+  const handleDateChange = (dateKey: string[], newDate: (dayjs.Dayjs | null)[]) => {
+    console.log(dateKey, newDate)
+    setSearchForm({...searchForm, [dateKey[0]]: newDate[0], [dateKey[1]]: newDate[1]})
+    // setSearchForm({...searchForm, dateFiled: newDate})
   }
+  
 
   // setSimulateDelay(true);
   // setTimeout(() => {
@@ -155,8 +162,8 @@ function CaseTable() {
       && (searchForm.caseStatus === "" || row.status.toLowerCase() === searchForm.caseStatus.toLowerCase())
       && (row.type.toLowerCase().includes(searchForm.caseType.toLowerCase()))
       && (row.parties.appellant.toLowerCase().includes(searchForm.caseParty.toLowerCase()) || row.parties.respondant.toLowerCase().includes(searchForm.caseParty.toLowerCase()))
-      && (row.dateFiled.includes(searchForm.dateFiled?.format('YYYY-MM-DD') || ''))
-      && (row.statusDate.includes(searchForm.statusDate?.format('YYYY-MM-DD') || ''))
+      && (dayjs(row.dateFiled).isAfter(searchForm.dateFiled) && dayjs(row.dateFiled).isBefore(searchForm.dateFiledEnd) || (row.dateFiled.includes(searchForm.dateFiled?.format('YYYY-MM-DD') || '')))
+      && (dayjs(row.statusDate).isAfter(searchForm.statusDate) && dayjs(row.statusDate).isBefore(searchForm.statusDateEnd) || (row.statusDate.includes(searchForm.statusDate?.format('YYYY-MM-DD') || '')))
     )
   }) || [];
 
