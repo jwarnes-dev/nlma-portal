@@ -115,8 +115,14 @@ const SearchPanel = ({ searchText, handleSearchChange, searchForm, handleSearchF
                 sx={{marginTop: '14px'}}
                 slots={{ field: SingleInputDateRangeField }}
                 slotProps={{ 
-                  textField: { InputProps: { endAdornment: <Calendar /> },
-                } }}
+                  textField: { InputProps: { endAdornment: <Calendar /> } },
+                  field: {
+                    clearable: true,
+                  },
+                  actionBar: {
+                    actions: ["clear"],
+                  },
+                } }
                 label="Last Updated"
                 calendars={1}
                 onChange={(newDate) => {

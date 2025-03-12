@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 
 interface EventListProps {
@@ -35,7 +36,7 @@ function EventItem({ event, showEvent }: EventItemProps) {
             <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858"}}>
                 <LocationOnIcon fontSize='small' /><Typography>{event.location}</Typography>
             </Stack>
-            <Link underline='hover' href='#' onClick={showEvent}>{event.title}</Link>
+            <Link underline='hover' href='#' onClick={showEvent}>{event.matter}</Link>
         </Stack>
 
         
@@ -45,6 +46,7 @@ function EventItem({ event, showEvent }: EventItemProps) {
 const events1: Event[] = [
     {
         title: "Status Conference",
+        matter: "Estate of Mary Smith",
         time: "9:00am - 10:30am",
         location: "Zoom",
         info: "This is a status conference",
@@ -53,8 +55,9 @@ const events1: Event[] = [
     },
     {
         title: "Evidentary Hearing",
+        matter: "Edwins v. DEEP",
         time: "12:00pm - 3:00pm",
-        location: "Zoom",
+        location: "Room 122B",
         info: "This is a Evidentary Hearing",
         id: '33',
         date: new Date().toDateString()
@@ -64,6 +67,7 @@ const events1: Event[] = [
 const events2: Event[] = [
     {
         title: "Public Comment Hearing",
+        matter: "Matter Title",
         time: "10:00am - 1:30pm",
         location: "Zoom",
         info: "This is a Public Comment Hearing",
@@ -75,8 +79,9 @@ const events2: Event[] = [
 const events3: Event[] = [
     {
         title: "Informational Public",
-        time: "11:00am - 2:30pm",
-        location: "Zoom",
+        matter: "Lease Review",
+        time: "All Day",
+        location: "Courtroom C",
         info: "This is a Public Comment Hearing",
         id: '44',
         date: new Date().toDateString()
@@ -85,6 +90,7 @@ const events3: Event[] = [
 const events4: Event[] = [
     {
         title: "Pre-hearing Conference",
+        matter: "Huntchins v. Doe",
         time: "12:45pm - 2:00pm",
         location: "Zoom",
         info: "This is a Public Comment Hearing",
@@ -213,8 +219,8 @@ export default function EventList({ events, master, eventDays }: EventListProps)
             onClose={handleClose}
             open={open}
             >
-            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                Event View - {event.title}
+            <DialogTitle sx={{ m: 0, p: 2, display: 'flex', justifyContent: 'space-between', paddingRight: '60px'}} id="customized-dialog-title">
+                {event.matter} &nbsp; <span style={{opacity: 0.7}}>{event.title}</span>
             </DialogTitle>
             <IconButton
                 onClick={handleClose}
@@ -227,6 +233,19 @@ export default function EventList({ events, master, eventDays }: EventListProps)
             >
                 <CloseIcon />
             </IconButton>
+            <DialogContent dividers>
+                <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                    <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858", width: "200px"}}>
+                        <CalendarMonthIcon fontSize='small' /><Typography>{ dayjs(event.date).format('MM/DD/YYYY') }</Typography>
+                    </Stack>
+                    <Stack direction="row" spacing={1} sx={{alignItems: "left", color: "#565858", width: "200px"}}>
+                        <AccessTimeIcon fontSize='small' /><Typography>{!event.endtime ? event.time : `${event.time} - ${event.endtime}` }</Typography>
+                    </Stack>
+                    <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858", marginLeft: '60px'}}>
+                        <LocationOnIcon fontSize='small' /><Typography>{event.location}</Typography>
+                    </Stack>
+                </Box>
+            </DialogContent>
             <DialogContent dividers>
                 <Typography gutterBottom>
                 Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
