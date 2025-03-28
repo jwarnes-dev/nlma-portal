@@ -12,39 +12,52 @@ import Grid from '@mui/material/Grid2'
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import IconButton from '@mui/material/IconButton';
 import DescriptionIcon from '@mui/icons-material/Description';
+import { RawDocument } from "@/app/common/types";
+import FileDownloadButton from "./FileDownloadButton";
+
+
+// Todo: /case/getFileById
 
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'ID' },
-  { field: 'dateAdded', headerName: 'Date Added', width: 130 },
-  { field: 'category', headerName: 'Category', width: 200 },
-  { field: 'name', headerName: 'Document Name', width: 300,  },
+  { field: 'id', headerName: 'ID', hideable: true, width: 15 },
+  { field: 'docketedFileNumber', headerName: 'Docket Number' },
+  { field: 'fileId', headerName: 'File Number' },
+  { field: 'receivedDate', headerName: 'Date Added', width: 100 },
+  { field: 'filedBy', headerName: 'Filed By', width: 200 },
+  { field: 'onBehalfOf', headerName: 'Filed on Behalf of', width: 100 },
+  { field: 'documentCategory', headerName: 'Category', width: 200 },
+  { field: 'documentType', headerName: 'Document Type', width: 50 },
+  { field: 'documentName', headerName: 'Document Name', width: 250,  },
+  { field: 'isConfidential', headerName: 'Confidential', width: 15 },
   { field: 'view', sortable: false, disableColumnMenu: true, headerName: 'View',
     renderCell: (p) => {
-      return <IconButton color="primary"><DescriptionIcon /> </IconButton>;
+      return <FileDownloadButton fileId={p.row.fileId} />
     }
    },
 ];
-const paginationModel = { page: 0, pageSize: 3 };
+const paginationModel = { page: 0, pageSize: 5 };
 
 const ViewButton = <IconButton color="primary"><DescriptionIcon /> </IconButton>
 
-const rows = [
-  {id: 2421, dateAdded: '2024-06-22', category: 'Supporting Documents', name: 'DEEP Exhibit #1 ', view: ''},
-  {id: 211, dateAdded: '2024-03-05', category: 'Supporting Documents', name: 'Land Use Permit', view: ''},
-  {id: 3214, dateAdded: '2024-09-14', category: 'Supporting Documents', name: 'Final Decision Notice', view: 'abc'},
-]
+interface CaseViewDocumentsTableProps {
+    documents: RawDocument[];
 
+}
 
+export default function CaseViewDocumentsTable({documents} : CaseViewDocumentsTableProps) {
 
-export default function CaseViewDocumentsTable() {
+  const mappedDocuments = documents?.map((doc, index) => {
+    return {...doc, id: index}
+  })
+  
     return (
       <DataGrid
-        rows={rows}
+        rows={mappedDocuments}
         columns={columns}
         rowSelection={false}
         initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[3, 10, 20]}
+        pageSizeOptions={[5, 10, 20]}
         sx={{ border: 0 }}
       />
     )

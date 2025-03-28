@@ -88,7 +88,7 @@ export default function CaseView() {
                 <Paper sx={{padding: '16px', width: '100%'}} elevation={3}>
                     <Typography variant="h6">Parties</Typography>
                     <Typography variant="caption">Shows the first few parties on the case.</Typography>
-                    <Box sx={{width: '80%', margin: '0 auto'}}>
+                    <Box sx={{width: '80%', margin: '0 auto', display: 'none'}}>
                         <Box sx={{display: 'flex', marginTop: '12px', justifyContent: 'space-around'}}>
                             <Box sx={{display: 'flex', flexDirection: 'column', textAlign: 'right'}}>
                                 <Typography sx={{fontWeight: '600'}}>{matter?.parties.appellant}</Typography>
@@ -134,7 +134,7 @@ export default function CaseView() {
                             </TabList>
                             </Box>
                             <TabPanel value="1">
-                                <CaseViewDocumentsTable />
+                                <CaseViewDocumentsTable documents={matter?.documents || []} />
                             </TabPanel>
                             <TabPanel value="2">Detailed parties information tab</TabPanel>
                             <TabPanel value="3">

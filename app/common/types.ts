@@ -1,3 +1,12 @@
+export type RawDocument = {
+  documentCategory: string;
+  documentName: string;
+  receivedDate: string;
+  trackingId: number;
+  fileId: number;
+};
+
+
 export interface CaseRow {
   title: string;
   case: string;
@@ -6,6 +15,7 @@ export interface CaseRow {
   dateFiled: string;
   status: string;
   statusDate: string;
+  documents: RawDocument[];
   parties: {
     appellant: string;
     respondant: string;

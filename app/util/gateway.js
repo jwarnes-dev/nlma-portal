@@ -6,9 +6,11 @@ const app = express();
 const PORT = 3030;
 app.use(cors());
 
+const fileProxyRouter = require('./routes/fileproxy');
+
 
 const BASE_URL = 'https://lmadev.cerebra-consulting.com/entellitrak/api/endpoints/case';
-const COOKIE = 'JSESSIONID=6F6AD3880EB96275B9E5840BB88061BC';
+const COOKIE = 'JSESSIONID=C01A30373B8B7C6A5E1B5ED2959035A9';
 
 const testComment = {
   "id": "test55555",
@@ -80,6 +82,8 @@ app.get('/events', async (req, res) => {
     res.status(500).json({ message: 'Error fetching events', error: error.message });
   }
 })
+
+app.use('/api', fileProxyRouter); //  /api/download-file/:id
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
