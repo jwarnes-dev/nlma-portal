@@ -136,7 +136,37 @@ export default function CaseView() {
                             <TabPanel value="1">
                                 <CaseViewDocumentsTable documents={matter?.documents || []} />
                             </TabPanel>
-                            <TabPanel value="2">Detailed parties information tab</TabPanel>
+                            <TabPanel value="2">
+                                <Box sx={{ width: '100%' }}>
+                                    <Typography variant="subtitle1" gutterBottom>Case Parties</Typography>
+                                    {matter && matter.contacts && matter.contacts.length > 0 ? (
+                                        <Paper elevation={1} sx={{ p: 2 }}>
+                                            {matter.contacts.map((contact, index) => (
+                                                <Box key={index} sx={{ mb: 1, pb: 1, borderBottom: index < matter.contacts.length - 1 ? '1px solid #eee' : 'none' }}>
+                                                    <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                        <Typography variant="body1">
+                                                            {contact.firstName} {contact.lastName}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="textSecondary">
+                                                            {contact.contactType}
+                                                        </Typography>
+                                                    </Box>
+                                                    {(contact.city || contact.state || contact.usPhone) && (
+                                                        <Typography variant="body2" color="textSecondary">
+                                                            {contact.city}{contact.city && contact.state ? ', ' : ''}
+                                                            {contact.state}
+                                                            {contact.usPhone && (contact.city || contact.state) ? ' • ' : ''}
+                                                            {contact.usPhone && `Phone: ${contact.usPhone}`}
+                                                        </Typography>
+                                                    )}
+                                                </Box>
+                                            ))}
+                                        </Paper>
+                                    ) : (
+                                        <Typography variant="body1" color="textSecondary">No parties information available.</Typography>
+                                    )}
+                                </Box>
+                            </TabPanel>
                             <TabPanel value="3">
                                 <Comments />
                             </TabPanel>
