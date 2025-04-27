@@ -1,7 +1,7 @@
 /* eslint no-use-before-define: 0 */  // --> OFF
 
 import React from 'react';
-import { Modal, Box, Typography, Button, Alert, Stack, Divider } from '@mui/material';
+import { Modal, Box, Typography, Button, Alert, Stack, Divider, Tabs, Tab } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
@@ -90,64 +90,143 @@ interface SignInModalProps {
   handleClose: () => void;
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
 
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`auth-tabpanel-${index}`}
+      aria-labelledby={`auth-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ pt: 2 }}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `auth-tab-${index}`,
+    'aria-controls': `auth-tabpanel-${index}`,
+  };
+}
 
 const SignInModal: React.FC<SignInModalProps> = ({ open, handleClose, setSession }) => {
 
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const { user, logout, login, db, isAuthed, isLoading, isError } = useAuth();
+  const { user, logout, login, signup, googleLogin, facebookLogin, db, isAuthed, isLoading, isError } = useAuth();
+  const [tabValue, setTabValue] = React.useState(0);
+  const [displayName, setDisplayName] = React.useState('');
 
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+  };
 
   const handleModalClose = (e, reason) => {
     if(reason === 'backdropClick' && isLoading) {
       return
+    }
+    handleClose();
   }
-  handleClose();
-}
+
+  const handleSignin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const formJson = Object.fromEntries((formData as any).entries());
+    login({ email: formJson.email, password: formJson.password }, setSession);
+  };
+
+  const handleSignup = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const formJson = Object.fromEntries((formData as any).entries());
+    signup({ 
+      email: formJson.email, 
+      password: formJson.password,
+      displayName: formJson.displayName as string
+    }, setSession);
+  };
+
+  const handleGoogleSignIn = (event: React.MouseEvent) => {
+    event.preventDefault();
+    googleLogin(setSession);
+  };
+
+  const handleFacebookSignIn = (event: React.MouseEvent) => {
+    event.preventDefault();
+    facebookLogin(setSession);
+  };
 
   return (
-
     <Dialog
-        open={open && !isAuthed}
-        onClose={handleModalClose}
-        autoFocus
-        PaperProps={{
-          component: 'form',
-          onSubmit: (event: React.FormEvent<HTMLFormElement>) => {
-            setLoading(true);
-
-            event.preventDefault();
-
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries((formData as any).entries());
-            login({ email: formJson.email, password: formJson.password }, setSession);
-
-            // console.log(email);
-          },
-        }}
-      >
-        <DialogTitle sx={
-          {
-            fontSize: '1.5rem',
-            fontWeight: '600',
-            display: 'flex',
-            justifyContent: 'center',
-
-          }}>Sign in to Cerebra LMA</DialogTitle>
-        <DialogContent>
-          <Box sx={{
-              width: '330px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+      open={open && !isAuthed}
+      onClose={handleModalClose}
+      autoFocus
+      PaperProps={{
+        component: 'form',
+        onSubmit: tabValue === 0 ? handleSignin : handleSignup,
+      }}
+    >
+      <DialogTitle sx={
+        {
+          fontSize: '1.5rem',
+          fontWeight: '600',
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}>
+        Cerebra LMA
+        <Tabs value={tabValue} onChange={handleTabChange} aria-label="auth tabs" sx={{ mt: 2 }}>
+          <Tab label="Sign In" {...a11yProps(0)} />
+          <Tab label="Sign Up" {...a11yProps(1)} />
+        </Tabs>
+      </DialogTitle>
+      <DialogContent>
+        <Box sx={{
+          width: '330px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <TabPanel value={tabValue} index={0}>
             <Typography variant='body2' color='textSecondary' gutterBottom>Please sign in to continue.</Typography>
-            <Stack direction={'column'} spacing={1}  sx={{width: '330px', margin: '8px 0'}}>
-              <Button disabled={isLoading} variant="outlined" startIcon={<CerebraIcon />}> Sign in with Cerebra </Button>
-              <Button disabled={isLoading} variant="outlined" startIcon={<GoogleIcon />}> Sign in with Google </Button>
-              <Button disabled={isLoading} variant="outlined" startIcon={<FacebookIcon />}> Sign in with Facebook </Button>
+            <Stack direction={'column'} spacing={1} sx={{ width: '330px', margin: '8px 0' }}>
+              {/* <Button disabled={isLoading} variant="outlined" startIcon={<CerebraIcon />}> Sign in with Cerebra </Button> */}
+              <Button 
+                disabled={isLoading} 
+                variant="outlined" 
+                startIcon={<GoogleIcon />}
+                onClick={handleGoogleSignIn}
+              > 
+                Sign in with Google 
+              </Button>
+              <Button 
+                disabled={isLoading} 
+                variant="outlined" 
+                startIcon={<FacebookIcon />}
+                onClick={handleFacebookSignIn}
+              > 
+                Sign in with Facebook 
+              </Button>
             </Stack>
             <Divider>or</Divider>
             <TextField
@@ -175,16 +254,78 @@ const SignInModal: React.FC<SignInModalProps> = ({ open, handleClose, setSession
               size='small'
               disabled={isLoading}
             />
-            { isError ? <Alert sx={{marginTop: '8px'}} severity="error">Oops, those credentials didn&apos;t work! </Alert> : null}
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button disabled={isLoading} onClick={handleClose}>Cancel</Button>
-          <LoadingButton  loading={isLoading} variant="contained" type='submit'>
-            Sign In
-      </LoadingButton>
-        </DialogActions>
-      </Dialog>
+          </TabPanel>
+          <TabPanel value={tabValue} index={1}>
+            <Typography variant='body2' color='textSecondary' gutterBottom>Create a new account.</Typography>
+            <Stack direction={'column'} spacing={1} sx={{ width: '330px', margin: '8px 0' }}>
+              <Button 
+                disabled={isLoading} 
+                variant="outlined" 
+                startIcon={<GoogleIcon />}
+                onClick={handleGoogleSignIn}
+              > 
+                Sign up with Google 
+              </Button>
+              <Button 
+                disabled={isLoading} 
+                variant="outlined" 
+                startIcon={<FacebookIcon />}
+                onClick={handleFacebookSignIn}
+              > 
+                Sign up with Facebook 
+              </Button>
+            </Stack>
+            <Divider>or</Divider>
+            <TextField
+              autoFocus
+              required
+              margin="dense"
+              name="displayName"
+              label="Full Name"
+              id="displayName"
+              type="text"
+              fullWidth
+              variant="outlined"
+              size='small'
+              disabled={isLoading}
+            />
+            <TextField
+              required
+              margin="dense"
+              name="email"
+              label="Email"
+              id="email"
+              type="email"
+              fullWidth
+              variant="outlined"
+              size='small'
+              disabled={isLoading}
+            />
+            <TextField
+              required
+              margin="dense"
+              name="password"
+              id="password"
+              label="Password"
+              type="password"
+              fullWidth
+              variant="outlined"
+              size='small'
+              disabled={isLoading}
+            />
+          </TabPanel>
+          {isError ? <Alert sx={{ marginTop: '8px' }} severity="error">
+            {tabValue === 0 ? "Oops, those credentials didn't work!" : "Could not create account. Please try again."}
+          </Alert> : null}
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button disabled={isLoading} onClick={handleClose}>Cancel</Button>
+        <LoadingButton loading={isLoading} variant="contained" type='submit'>
+          {tabValue === 0 ? 'Sign In' : 'Sign Up'}
+        </LoadingButton>
+      </DialogActions>
+    </Dialog>
   );
 };
 
