@@ -104,7 +104,7 @@ const ADMIN: Navigation = [
 ]
 
 const BRANDING = {
-  title:<>Legal Matters Accelerator <Chip label="Dev" /></>,
+  title:<>Legal Matters Accelerator {process.env.NEXT_PUBLIC_ENV_LABEL ? <Chip label={process.env.NEXT_PUBLIC_ENV_LABEL} /> : null}</>,
   logo: ''
 };
 
