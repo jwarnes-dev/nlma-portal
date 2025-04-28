@@ -584,6 +584,7 @@
         "allDay": true,
         "instructions": "Schedule Hearing \r\n\r\n",
         "taskType": "Hearing",
+        "dueDate": "10-30-2024",
         "taskNumber": "T-2024-00010",
         "beginTime": "",
         "endTime": "",

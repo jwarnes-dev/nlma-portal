@@ -38,7 +38,7 @@ const CaseTableView = ({ columns, sortedRows, orderBy, order, handleRequestSort,
                 <TableCell>{ dayjs(row.dateFiled).format(dateFormatString) }</TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell>{ dayjs(row.statusDate).format(dateFormatString) }</TableCell>
-                <TableCell>{`${row.parties.appellant}`}</TableCell>
+                {/* <TableCell>{`${row.parties.appellant}`}</TableCell> */}
               </TableRow>
             ))}
         </TableBody>

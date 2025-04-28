@@ -24,7 +24,6 @@ const columns: Column[] = [
   { id: "dateFiled", label: "Date Filed" },
   { id: "status", label: "Status" },
   { id: "statusDate", label: "Final Decision" },
-  { id: "parties", label: "Parties" }
 ]
 
 const caseTypes = [

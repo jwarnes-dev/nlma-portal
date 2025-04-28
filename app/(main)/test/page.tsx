@@ -39,7 +39,7 @@ export default function TestPage() {
         if (!days.has(today)) {
           // days.add(today);
         }
-        const eventDays: { date: string; dayName: string; dateNumber: string; month: string; events: any[] }[] = [];
+        const eventDays: { date: string; dayName: string; dateNumber: string; month: string; events: any[]; active?: boolean }[] = [];
 
         // {
         //   "allDay": true,
@@ -78,11 +78,43 @@ export default function TestPage() {
           eventDays.push({ date: day, dayName, dateNumber, month, events: mappedEvents });
         })
 
-        console.log(eventDays)
+        
+         // TODO: logic here to set the current day to active
+         console.log(eventDays)
+
+        // Set current day to active and add it if missing
+        let currentDayExists = false;
+        
+        // Check if current day exists and mark it active
+        eventDays.forEach(day => {
+          console.log(day.date, today)
+          if (day.date === today) {
+            day.active = true;
+            currentDayExists = true;
+          } else {
+            day.active = false;
+          }
+        });
+        
+        // Add current day if it doesn't exist in the list
+        if (!currentDayExists) {
+          const dayName = dayjs(today).format('ddd');
+          const dateNumber = dayjs(today).format('DD');
+          const month = dayjs(today).format('MMMM YYYY');
+          eventDays.push({ 
+            date: today, 
+            dayName, 
+            dateNumber, 
+            month, 
+            events: [],
+            active: true 
+          });
+        }
 
         const sortedDays = eventDays.sort((a, b) => {
-          return a.dateNumber > b.dateNumber ? 1 : -1;
+          return dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1;
         });
+
         setData(sortedDays);
 
       } catch (err) {
