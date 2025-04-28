@@ -85,7 +85,7 @@ export default function CaseView() {
                         </Box>
                     </Box>
                 </Paper>
-                <Paper sx={{padding: '16px', width: '100%'}} elevation={3}>
+                {/* <Paper sx={{padding: '16px', width: '100%'}} elevation={3}>
                     <Typography variant="h6">Parties</Typography>
                     <Typography variant="caption">Shows the first few parties on the case.</Typography>
                     <Box sx={{width: '80%', margin: '0 auto', display: 'none'}}>
@@ -116,7 +116,7 @@ export default function CaseView() {
                             </Box>
                         </Box>
                     </Box>
-                </Paper>
+                </Paper> */}
             </Grid>
             <Grid size={6}>
                  <EventsList events={[]} />
@@ -151,14 +151,6 @@ export default function CaseView() {
                                                             {contact.contactType}
                                                         </Typography>
                                                     </Box>
-                                                    {(contact.city || contact.state || contact.usPhone) && (
-                                                        <Typography variant="body2" color="textSecondary">
-                                                            {contact.city}{contact.city && contact.state ? ', ' : ''}
-                                                            {contact.state}
-                                                            {contact.usPhone && (contact.city || contact.state) ? ' • ' : ''}
-                                                            {contact.usPhone && `Phone: ${contact.usPhone}`}
-                                                        </Typography>
-                                                    )}
                                                 </Box>
                                             ))}
                                         </Paper>

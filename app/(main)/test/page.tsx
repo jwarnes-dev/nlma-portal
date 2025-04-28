@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { APIResponse } from '@/app/common/types';
 import dayjs from 'dayjs';
 import { Event } from "@common/types";
-import mockCases from "../case-search/mock/mock.cases-live.json"
+import mockCases from "../case-search/mock/mock-cases-docs.json" 
 
 export default function TestPage() {
 
@@ -24,7 +24,6 @@ export default function TestPage() {
         const response = { data: mockCases } 
 
 
-        console.log("recv")
 
         const allTasks = response.data.flatMap(item =>
           item.tasks.map(task => ({
@@ -35,7 +34,7 @@ export default function TestPage() {
 
 
         const days = new Set<string>(allTasks.map( t => t.dueDate));
-        console.log(days)
+
         const today = dayjs().format('MM-DD-YYYY');
         if (!days.has(today)) {
           // days.add(today);
@@ -79,8 +78,11 @@ export default function TestPage() {
           eventDays.push({ date: day, dayName, dateNumber, month, events: mappedEvents });
         })
 
-        const sortedDays = eventDays.sort((a, b) => a.date > b.date ? 1 : -1);
-        
+        console.log(eventDays)
+
+        const sortedDays = eventDays.sort((a, b) => {
+          return a.dateNumber > b.dateNumber ? 1 : -1;
+        });
         setData(sortedDays);
 
       } catch (err) {
