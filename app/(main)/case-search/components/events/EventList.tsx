@@ -36,68 +36,68 @@ function EventItem({ event, showEvent }: EventItemProps) {
             <Stack direction="row" spacing={1} sx={{alignItems: "center", color: "#565858"}}>
                 <LocationOnIcon fontSize='small' /><Typography>{event.location}</Typography>
             </Stack>
-            <Link underline='hover' href='#' onClick={showEvent}>{event.matter}</Link>
+            <Link underline='hover' href='#' onClick={showEvent}>{event.matter || event.title}</Link>
         </Stack>
 
         
     )
 }
 
-const events1: Event[] = [
-    {
-        title: "Status Conference",
-        matter: "Estate of Mary Smith",
-        time: "9:00am - 10:30am",
-        location: "Zoom",
-        info: "This is a status conference",
-        id: '123',
-        date: new Date().toDateString()
-    },
-    {
-        title: "Evidentary Hearing",
-        matter: "Edwins v. DEEP",
-        time: "12:00pm - 3:00pm",
-        location: "Room 122B",
-        info: "This is a Evidentary Hearing",
-        id: '33',
-        date: new Date().toDateString()
-    }
-]
+// const events1: Event[] = [
+//     {
+//         title: "Status Conference",
+//         matter: "Estate of Mary Smith",
+//         time: "9:00am - 10:30am",
+//         location: "Zoom",
+//         info: "This is a status conference",
+//         id: '123',
+//         date: new Date().toDateString()
+//     },
+//     {
+//         title: "Evidentary Hearing",
+//         matter: "Edwins v. DEEP",
+//         time: "12:00pm - 3:00pm",
+//         location: "Room 122B",
+//         info: "This is a Evidentary Hearing",
+//         id: '33',
+//         date: new Date().toDateString()
+//     }
+// ]
 
-const events2: Event[] = [
-    {
-        title: "Public Comment Hearing",
-        matter: "Matter Title",
-        time: "10:00am - 1:30pm",
-        location: "Zoom",
-        info: "This is a Public Comment Hearing",
-        id: '44',
-        date: new Date().toDateString()
-    },
-]
+// const events2: Event[] = [
+//     {
+//         title: "Public Comment Hearing",
+//         matter: "Matter Title",
+//         time: "10:00am - 1:30pm",
+//         location: "Zoom",
+//         info: "This is a Public Comment Hearing",
+//         id: '44',
+//         date: new Date().toDateString()
+//     },
+// ]
 
-const events3: Event[] = [
-    {
-        title: "Informational Public",
-        matter: "Lease Review",
-        time: "All Day",
-        location: "Courtroom C",
-        info: "This is a Public Comment Hearing",
-        id: '44',
-        date: new Date().toDateString()
-    },
-]
-const events4: Event[] = [
-    {
-        title: "Pre-hearing Conference",
-        matter: "Huntchins v. Doe",
-        time: "12:45pm - 2:00pm",
-        location: "Zoom",
-        info: "This is a Public Comment Hearing",
-        id: '44',
-        date: new Date().toDateString()
-    },
-]
+// const events3: Event[] = [
+//     {
+//         title: "Informational Public",
+//         matter: "Lease Review",
+//         time: "All Day",
+//         location: "Courtroom C",
+//         info: "This is a Public Comment Hearing",
+//         id: '44',
+//         date: new Date().toDateString()
+//     },
+// ]
+// const events4: Event[] = [
+//     {
+//         title: "Pre-hearing Conference",
+//         matter: "Huntchins v. Doe",
+//         time: "12:45pm - 2:00pm",
+//         location: "Zoom",
+//         info: "This is a Public Comment Hearing",
+//         id: '44',
+//         date: new Date().toDateString()
+//     },
+// ]
 
 interface EventDayProps {
     day: string;
@@ -176,42 +176,9 @@ export default function EventList({ events, master, eventDays }: EventListProps)
                 </Stack>
                 <Divider sx={{marginBottom: '12px', marginTop: '4px'}} />
                 <Stack spacing={1}>
-                    {(() => {
-                        if(!master) {
-                        switch (date.format('MMMM YYYY')) {
-                                case 'September 2024':
-                                    return (
-                                        <>
-                                            <EventDay day="Mon" date="04" active={false} events={events1} open={openModal} />
-                                        </>
-                                    );
-                                case 'October 2024':
-                                    return (
-                                        <>
-                                            <EventDay day="Thu" date="12" active={false} events={events4} open={openModal} />
-                                            <EventDay day="Fri" date="13" active={false} events={events2} open={openModal} />
-                                        </>
-                                    );
-                                case 'November 2024':
-                                    return (
-                                        <>
-                                            <EventDay day="Thu" date="07" active={true} events={events1} open={openModal} />
-                                            <EventDay day="Mon" date="11" active={false} events={events2} open={openModal} />
-                                            <EventDay day="Tue" date="12" active={date.format('D') == '12'} events={events3} open={openModal} />
-                                            <EventDay day="Wed" date="13" active={false} events={events3} open={openModal} />
-                                        </>
-                                    );
-                                default:
-                                    return (
-                                        <Paper square={false} sx={{padding: '16px', width: '100%'}} elevation={1} >
-                                            <Typography sx={{color: "#565858"}}>No events scheduled for this month.</Typography>
-                                        </Paper>
-                                    );
-                            }
-                        }  else {
-                            return eventDays?.filter(day => day.month === date.format('MMMM YYYY')).map((day: any) => <EventDay key={day.date} day={day.dayName} date={day.dateNumber} active={day.date == new Date().toDateString()} events={day.events} open={openModal} />) || null
-                        }
-                    })()}
+                    {
+                        eventDays?.filter(day => day.month === date.format('MMMM YYYY')).map((day: any) => <EventDay key={day.date} day={day.dayName} date={day.dateNumber} active={day.active || false} events={day.events} open={openModal} />) || null
+                    }
                 </Stack>
             </Box>
         </Paper>
@@ -247,15 +214,7 @@ export default function EventList({ events, master, eventDays }: EventListProps)
                 </Box>
             </DialogContent>
             <DialogContent dividers>
-                <Typography gutterBottom>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                consectetur ac, vestibulum at eros.
-                </Typography>
-                <Typography gutterBottom>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-                </Typography>
+                <Typography gutterBottom>{event.info}</Typography>
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={handleClose}>

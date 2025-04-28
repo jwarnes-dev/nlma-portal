@@ -29,6 +29,17 @@ type RawCase = {
   updatedDate: string;
   documents: RawDocument[];
   tasks: RawTask[];
+  contacts: {
+    firstName: string;
+    lastName: string;
+    contactType: string;
+    country: string | number;
+    city: string;
+    addressLine1: string;
+    addressLine2: string;
+    state: string | number;
+    usPhone: string;
+  }[];
 };
 
 type TransformedCase = {
@@ -44,6 +55,17 @@ type TransformedCase = {
     respondant: string;
   };
   documents: RawDocument[];
+  contacts: {
+    firstName: string;
+    lastName: string;
+    contactType: string;
+    country: string | number;
+    city: string;
+    addressLine1: string;
+    addressLine2: string;
+    state: string | number;
+    usPhone: string;
+  }[];
 };
 
 function transformCases(rawData: RawCase[]): TransformedCase[] {
@@ -74,6 +96,7 @@ function transformCases(rawData: RawCase[]): TransformedCase[] {
         respondant: "Unknown Respondant", // You can update this too
       },
       documents: entry.documents || [],
+      contacts: entry.contacts || [],
     };
   });
 }

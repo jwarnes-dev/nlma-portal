@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { APIResponse } from '@/app/common/types';
 import dayjs from 'dayjs';
 import { Event } from "@common/types";
-import mockCases from "../case-search/mock/mock.cases-live.json"
+import mockCases from "../case-search/mock/mock-cases-docs.json" 
 
 export default function TestPage() {
 
@@ -24,7 +24,6 @@ export default function TestPage() {
         const response = { data: mockCases } 
 
 
-        console.log("recv")
 
         const allTasks = response.data.flatMap(item =>
           item.tasks.map(task => ({
@@ -35,12 +34,12 @@ export default function TestPage() {
 
 
         const days = new Set<string>(allTasks.map( t => t.dueDate));
-        console.log(days)
+
         const today = dayjs().format('MM-DD-YYYY');
         if (!days.has(today)) {
           // days.add(today);
         }
-        const eventDays: { date: string; dayName: string; dateNumber: string; month: string; events: any[] }[] = [];
+        const eventDays: { date: string; dayName: string; dateNumber: string; month: string; events: any[]; active?: boolean }[] = [];
 
         // {
         //   "allDay": true,
@@ -79,8 +78,43 @@ export default function TestPage() {
           eventDays.push({ date: day, dayName, dateNumber, month, events: mappedEvents });
         })
 
-        const sortedDays = eventDays.sort((a, b) => a.date > b.date ? 1 : -1);
         
+         // TODO: logic here to set the current day to active
+         console.log(eventDays)
+
+        // Set current day to active and add it if missing
+        let currentDayExists = false;
+        
+        // Check if current day exists and mark it active
+        eventDays.forEach(day => {
+          console.log(day.date, today)
+          if (day.date === today) {
+            day.active = true;
+            currentDayExists = true;
+          } else {
+            day.active = false;
+          }
+        });
+        
+        // Add current day if it doesn't exist in the list
+        if (!currentDayExists) {
+          const dayName = dayjs(today).format('ddd');
+          const dateNumber = dayjs(today).format('DD');
+          const month = dayjs(today).format('MMMM YYYY');
+          eventDays.push({ 
+            date: today, 
+            dayName, 
+            dateNumber, 
+            month, 
+            events: [],
+            active: true 
+          });
+        }
+
+        const sortedDays = eventDays.sort((a, b) => {
+          return dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1;
+        });
+
         setData(sortedDays);
 
       } catch (err) {

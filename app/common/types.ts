@@ -20,6 +20,17 @@ export interface CaseRow {
     appellant: string;
     respondant: string;
   };
+  contacts?: {
+    firstName: string;
+    lastName: string;
+    contactType: string;
+    country: string | number;
+    city: string;
+    addressLine1: string;
+    addressLine2: string;
+    state: string | number;
+    usPhone: string;
+  }[];
 }
 
 export interface APIResponse {

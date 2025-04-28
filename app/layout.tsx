@@ -47,45 +47,46 @@ const NAVIGATION: Navigation = [
     title: 'Search Cases',
     icon: <SearchIcon />,
   },
-  {
-    segment: 'intake',
-    title: 'Public Case Intake',
-    icon: <AssignmentIcon />,
-  },
-  {
-    segment: 'document-search',
-    title: 'Document Search',
-    icon: <FindInPageIcon />,
-  },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Analytics',
-  },
-  {
-    segment: 'reports',
-    title: 'Reports',
-    icon: <BarChartIcon />,
-    children: [
-      {
-        segment: 'case-status',
-        title: 'Case Status',
-        icon: <DescriptionIcon />,
-      },
-      {
-        segment: 'attorney-metrics',
-        title: 'Metrics',
-        icon: <DescriptionIcon />,
-      },
-    ],
-  },
-  {
-    segment: 'integrations',
-    title: 'Integrations',
-    icon: <LayersIcon />,
-  },
+  // {
+  //   segment: 'intake',
+  //   title: 'Public Case Intake',
+  //   icon: <AssignmentIcon />,
+  // },
+  // {
+  //   segment: 'document-search',
+  //   title: 'Document Search',
+  //   icon: <FindInPageIcon />,
+
+  // },
+  // {
+  //   kind: 'divider',
+  // },
+  // {
+  //   kind: 'header',
+  //   title: 'Analytics',
+  // },
+  // {
+  //   segment: 'reports',
+  //   title: 'Reports',
+  //   icon: <BarChartIcon />,
+  //   children: [
+  //     {
+  //       segment: 'case-status',
+  //       title: 'Case Status',
+  //       icon: <DescriptionIcon />,
+  //     },
+  //     {
+  //       segment: 'attorney-metrics',
+  //       title: 'Metrics',
+  //       icon: <DescriptionIcon />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   segment: 'integrations',
+  //   title: 'Integrations',
+  //   icon: <LayersIcon />,
+  // },
 ];
 
 const ADMIN: Navigation = [
@@ -104,8 +105,12 @@ const ADMIN: Navigation = [
 ]
 
 const BRANDING = {
-  title:<>Legal Matters Accelerator <Chip label="Dev" /></>,
-  logo: ''
+  title:<><div onClick={(e) => {
+    e.preventDefault();
+    window.location.href = '/test';  
+  }} style={{textDecoration: 'none', color: 'inherit', zIndex: 1000}} href="/test">Legal Matters Accelerator {process.env.NEXT_PUBLIC_ENV_LABEL ? <Chip label={process.env.NEXT_PUBLIC_ENV_LABEL} /> : null}</div></>,
+  logo: '',
+  homeUrl: '/toolpad/core/introduction',
 };
 
 
