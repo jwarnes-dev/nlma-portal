@@ -5,7 +5,8 @@ import DescriptionIcon from "@mui/icons-material/Description";
 const FileDownloadButton = ({ fileId }: { fileId: string }) => {
   const downloadFile = async () => {
     // const url = `https://lmadev.cerebra-consulting.com/entellitrak/api/endpoints/case/getFileById?id=${fileId}`;
-    const url = `http://localhost:3030/api/download-file/${fileId}`;
+    // const url = `http://localhost:3030/api/download-file/${fileId}`;
+    const url = `http://google.com`;
     
 
     try {
@@ -39,13 +40,14 @@ const FileDownloadButton = ({ fileId }: { fileId: string }) => {
     }
   };
 
+  // ACTIVE
   const handleDownload = () => {
     // Attempt to set the JSESSIONID cookie (will only work if HttpOnly is NOT set)
     document.cookie = "JSESSIONID=C01A30373B8B7C6A5E1B5ED2959035A9; path=/; domain=cerebra-consulting.com";
 
     // Create and click a download link
     const link = document.createElement("a");
-    link.href = `http://localhost:3030/api/download-file/${fileId}`;
+    link.href = `http://ec2-54-176-91-165.us-west-1.compute.amazonaws.com:3030/api/download-file/${fileId}`;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     document.body.appendChild(link);

@@ -37,7 +37,7 @@ const CaseTableView = ({ columns, sortedRows, orderBy, order, handleRequestSort,
                 <TableCell><Link component={NextLink} href={`/case-search/${row.case}`}>{row.case}</Link></TableCell>
                 <TableCell>{ dayjs(row.dateFiled).format(dateFormatString) }</TableCell>
                 <TableCell>{row.status}</TableCell>
-                <TableCell>{ dayjs(row.statusDate).format(dateFormatString) }</TableCell>
+                {/* <TableCell>{ dayjs(row.statusDate).format(dateFormatString) }</TableCell> */}
                 {/* <TableCell>{`${row.parties.appellant}`}</TableCell> */}
               </TableRow>
             ))}
