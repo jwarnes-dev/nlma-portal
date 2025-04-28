@@ -16,11 +16,13 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import LayersIcon from '@mui/icons-material/Layers';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 import { DialogsProvider, useDialogs, DialogProps } from '@toolpad/core/useDialogs';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import Chip from '@mui/material/Chip';
+
 
 import { AuthProvider, useAuth } from '@auth/FirebaseContext';
 
@@ -46,6 +48,11 @@ const NAVIGATION: Navigation = [
     segment: 'case-search',
     title: 'Search Cases',
     icon: <SearchIcon />,
+  },
+  {
+    segment: 'test',
+    title: 'Case Calendar',
+    icon: <CalendarMonthIcon />,
   },
   // {
   //   segment: 'intake',

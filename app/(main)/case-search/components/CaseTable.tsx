@@ -23,7 +23,7 @@ const columns: Column[] = [
   { id: "case", label: "Case" },
   { id: "dateFiled", label: "Date Filed" },
   { id: "status", label: "Status" },
-  { id: "statusDate", label: "Final Decision" },
+  // { id: "statusDate", label: "Final Decision" },
 ]
 
 const caseTypes = [

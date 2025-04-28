@@ -130,7 +130,7 @@ export default function CommentsListApprove({ commentso, actions }: CommentsList
   const sortedComments = filteredComments.sort((a,b) => a.date < b.date ? 1 : -1)
     return (
         <Box>
-          {sortedComments.length < 1 && <Typography>No comments are pending approval.</Typography>}
+          {sortedComments.length < 1 && <Typography>No public comments posted.</Typography>}
             {sortedComments && sortedComments.map(c => (
                 <Paper square={false} key={c.id} elevation={2} sx={{marginTop: "16px", padding: "14px"}}>
                     <Stack direction="row" spacing={2} sx={{alignItems: "center"}}>
